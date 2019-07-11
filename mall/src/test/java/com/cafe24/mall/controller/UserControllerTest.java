@@ -2,12 +2,11 @@ package com.cafe24.mall.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.TestUtil;
 import com.cafe24.mall.MemberEnum;
 import com.cafe24.mall.config.AppConfig;
 import com.cafe24.mall.config.TestWebConfig;
@@ -78,9 +76,24 @@ public class UserControllerTest {
 		ResultActions resultActions = mockMvc
 				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(vo.getNo())));
+	}
+
+	// 로그인 Test
+	@Test
+	public void testUserLogin() throws Exception {
+		UserVo vo = new UserVo();
+		vo.setNo(1);
+		vo.setId("hajiseung");
+		vo.setPw("1234");
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
 		resultActions
 		.andExpect(status().isOk()).andDo(print())
-		.andExpect(jsonPath("$.data.no", is(vo.getNo())));
+		.andExpect(jsonPath("$.data.no", is(vo.getNo())))
+		.andExpect(jsonPath("$.data.id", is(vo.getId())))
+		.andExpect(jsonPath("$.data.pw", is(vo.getPw())));
 
 	}
 }

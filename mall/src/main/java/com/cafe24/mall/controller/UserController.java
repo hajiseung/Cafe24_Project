@@ -20,17 +20,25 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	// 회원 가입
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public JSONResult joinUser(UserVo userVo) {
 		UserVo result = userService.joinUser(userVo);
 		return JSONResult.success(result);
 	}
 
-	@ApiOperation(value = "이메일 존재여부 확인")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "email", value = "이메일 주소", required = true, dataType = "string", defaultValue = "") })
-	@RequestMapping(value = "/api/login", method = RequestMethod.POST)
-	public String test() {
-		return "main";
+	// 회원 로그인
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public JSONResult loginUser(UserVo userVo) {
+		UserVo result = userService.loginUser(userVo);
+		return JSONResult.success(result);
 	}
+
+//	@ApiOperation(value = "이메일 존재여부 확인")
+//	@ApiImplicitParams({
+//			@ApiImplicitParam(name = "email", value = "이메일 주소", required = true, dataType = "string", defaultValue = "") })
+//	@RequestMapping(value = "/api/login", method = RequestMethod.POST)
+//	public String test() {
+//		return "main";
+//	}
 }
