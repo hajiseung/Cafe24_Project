@@ -7,6 +7,10 @@ import com.cafe24.mall.vo.UserVo;
 @Service
 public class UserService {
 
-	public void joinUser(UserVo userVo) {
+	public UserVo joinUser(UserVo userVo) {
+		UserVo result = new UserVo();
+		result.setNo(1);
+		return result;
+
 	}
 }

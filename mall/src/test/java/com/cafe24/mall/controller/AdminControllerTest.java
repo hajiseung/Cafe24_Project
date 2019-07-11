@@ -54,10 +54,10 @@ public class AdminControllerTest {
 
 	@Test
 	public void testAdminInsertItem() throws Exception {
-		List<String> list = new ArrayList<>();
+		List<String> option = new ArrayList<>();
 		List<String> subphoto = new ArrayList<>();
-		list.add("빨강");
-		list.add("노랑");
+		option.add("빨강");
+		option.add("노랑");
 		subphoto.add("사진1");
 		subphoto.add("사진2");
 
@@ -71,7 +71,7 @@ public class AdminControllerTest {
 		vo.setIs_sub_photo(false);
 		vo.setLow_category("상의");
 		vo.setMain_photo("메인포토");
-		vo.setName(list);
+		vo.setName(option);
 		vo.setNo(1);
 		vo.setNon_amount(false);
 		vo.setPrice(10000);
@@ -85,7 +85,23 @@ public class AdminControllerTest {
 
 		resultActions.andExpect(status().isOk()).andDo(print())
 				.andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data.title", is(vo.getTitle())));
+				.andExpect(jsonPath("$.data.title", is(vo.getTitle())))
+				.andExpect(jsonPath("$.data.amount",is(vo.getAmount())))
+				.andExpect(jsonPath("$.data.available_amount",is(vo.getAvailable_amount())))
+				.andExpect(jsonPath("$.data.category_no",is(vo.getCategory_no())))
+				.andExpect(jsonPath("$.data.desc",is(vo.getDesc())))
+				.andExpect(jsonPath("$.data.displaystatus",is(vo.isDisplaystatus())))
+				.andExpect(jsonPath("$.data.is_sub_photo",is(vo.isIs_sub_photo())))
+				.andExpect(jsonPath("$.data.low_category",is(vo.getLow_category())))
+				.andExpect(jsonPath("$.data.main_photo",is(vo.getMain_photo())))
+				.andExpect(jsonPath("$.data.name",is(vo.getName())))
+				.andExpect(jsonPath("$.data.no",is(vo.getNo())))
+				.andExpect(jsonPath("$.data.non_amount",is(vo.isNon_amount())))
+				.andExpect(jsonPath("$.data.price",is(vo.getPrice())))
+				.andExpect(jsonPath("$.data.reg_date",is(vo.getReg_date())))
+				.andExpect(jsonPath("$.data.salestatus",is(vo.isSalestatus())))
+				.andExpect(jsonPath("$.data.sub_photo",is(vo.getSub_photo())))
+				.andExpect(jsonPath("$.data.top_category",is(vo.getTop_category())));
 	}
 
 }

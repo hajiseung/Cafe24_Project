@@ -16,26 +16,11 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	// 물품 등록
 	@RequestMapping(value = "/item/add", method = RequestMethod.POST)
 	public JSONResult addItem(ItemVo itemVo) {
 		ItemVo vo = adminService.addItem(itemVo);
 		return JSONResult.success(vo);
-	}
-
-	// Category 추가
-	@ResponseBody
-	@RequestMapping(value = "/item/addcategory", method = RequestMethod.POST)
-	public JSONResult addCategory() {
-		boolean result = adminService.addCatagory();
-		return JSONResult.success(result);
-	}
-	// Option 추가
-	@ResponseBody
-	@RequestMapping(value = "/item/addoption", method = RequestMethod.POST)
-	public JSONResult addOption() {
-		boolean result = adminService.addOption();
-		return JSONResult.success(result);
 	}
 }

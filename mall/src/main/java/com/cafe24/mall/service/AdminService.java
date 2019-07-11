@@ -11,10 +11,10 @@ import com.cafe24.mall.vo.ItemVo;
 public class AdminService {
 
 	public ItemVo addItem(ItemVo itemVo) {
-		List<String> list = new ArrayList<>();
+		List<String> option = new ArrayList<>();
 		List<String> subphoto = new ArrayList<>();
-		list.add("빨강");
-		list.add("노랑");
+		option.add("빨강");
+		option.add("노랑");
 		subphoto.add("사진1");
 		subphoto.add("사진2");
 		ItemVo vo = new ItemVo();
@@ -27,7 +27,7 @@ public class AdminService {
 		vo.setIs_sub_photo(false);
 		vo.setLow_category("상의");
 		vo.setMain_photo("메인포토");
-		vo.setName(list);
+		vo.setName(option);
 		vo.setNo(1);
 		vo.setNon_amount(false);
 		vo.setPrice(10000);
@@ -37,13 +37,4 @@ public class AdminService {
 		vo.setTop_category("옷");
 		return vo;
 	}
-
-	public boolean addCatagory() {
-		return false;
-	}
-
-	public boolean addOption() {
-		return false;
-	}
-
 }

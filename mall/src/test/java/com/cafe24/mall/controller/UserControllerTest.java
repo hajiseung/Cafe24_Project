@@ -1,18 +1,23 @@
 package com.cafe24.mall.controller;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -22,6 +27,7 @@ import com.cafe24.mall.config.AppConfig;
 import com.cafe24.mall.config.TestWebConfig;
 import com.cafe24.mall.service.UserService;
 import com.cafe24.mall.vo.UserVo;
+import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, TestWebConfig.class })
@@ -45,11 +51,11 @@ public class UserControllerTest {
 		assertNotNull(userService);
 	}
 
-	
-	//회원가입 Test
+	// 회원가입 Test
 	@Test
 	public void testUserJoin() throws Exception {
 		UserVo vo = new UserVo();
+		vo.setNo(1);
 		vo.setAccount_number("1111-222-333333");
 		vo.setBirthday("901006");
 		vo.setCell_ph("010-3333-7777");
@@ -69,10 +75,12 @@ public class UserControllerTest {
 		vo.setSms_recv(false);
 		vo.setTell_ph(null);
 
-//		Mockito.when(userService.joinUser(any(UserVo.class)));
+		ResultActions resultActions = mockMvc
+				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
-		mockMvc.perform(post("/api/user/join").contentType(TestUtil.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
-				.andDo(print());
+		resultActions
+		.andExpect(status().isOk()).andDo(print())
+		.andExpect(jsonPath("$.data.no", is(vo.getNo())));
 
 	}
 }
