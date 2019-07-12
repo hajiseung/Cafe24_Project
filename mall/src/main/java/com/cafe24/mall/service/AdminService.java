@@ -37,4 +37,19 @@ public class AdminService {
 		vo.setTop_category("옷");
 		return vo;
 	}
+
+	public void memberList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void orderList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void itemList() {
+		// TODO Auto-generated method stub
+		
+	}
 }
