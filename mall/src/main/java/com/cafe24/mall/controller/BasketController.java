@@ -32,6 +32,12 @@ public class BasketController {
 		basketService.deleteItemFromBasket();
 	}
 
+	// 장바구니 물품 주문 페이지
+	@RequestMapping(value = "/form/orderfrombasket", method = RequestMethod.GET)
+	public String getOrderFromBasket() {
+		return "api/basket/form/orderfrombasket";
+	}
+
 	// 장바구니 물품 주문
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
 	public void orderFromBasket() {

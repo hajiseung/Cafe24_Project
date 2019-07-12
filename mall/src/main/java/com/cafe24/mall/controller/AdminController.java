@@ -19,7 +19,7 @@ public class AdminController {
 
 	// 물품 등록 페이지
 	@RequestMapping(value = "/form/item", method = RequestMethod.GET)
-	public String addItemForm() {
+	public String getaddItemForm() {
 		return "api/admin/form/item";
 	}
 
@@ -30,6 +30,12 @@ public class AdminController {
 		return JSONResult.success(vo);
 	}
 
+	// 회원 관리 페이지
+	@RequestMapping(value = "/form/memberlist", method = RequestMethod.GET)
+	public String getMemberList() {
+		return "api/admin/form/memberlist";
+	}
+
 	// 회원 관리
 	@RequestMapping(value = "/memberlist", method = RequestMethod.GET)
 	public void memberList() {
@@ -38,7 +44,7 @@ public class AdminController {
 
 	// 주문 관리 페이지 호출
 	@RequestMapping(value = "/form/orderlist", method = RequestMethod.GET)
-	public String orderListForm() {
+	public String getorderListForm() {
 		return "api/admin/form/orderlist";
 	}
 
@@ -50,7 +56,7 @@ public class AdminController {
 
 	// 재고 관리 페이지 호출
 	@RequestMapping(value = "/form/itemlist", method = RequestMethod.GET)
-	public String itemListForm() {
+	public String getitemListForm() {
 		return "api/admin/form/itemlist";
 	}
 
