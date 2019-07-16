@@ -1,22 +1,45 @@
 package com.cafe24.mall.vo;
 
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.cafe24.mall.MemberEnum;
 
 public class UserVo {
 
-	private int no;
+	private long no;
+
+	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z0-9]{4,16}$", message = "대,소문자 영어, 숫자만 입력해주세요")
+	@Length(min = 4, max = 16, message = "4~16자 사이의 문자를 입력해주세요")
 	private String id;
+
+	@NotEmpty
+	@Email(message = "잘못된 Email형식 입니다.")
 	private String email;
+
+	@NotEmpty
+	@Pattern(regexp = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{6,20}", message = "비밀번호는 6자 이상 20자 이하의 알파벳, 숫자, 특수문자를 조합하여 작성해야 합니다.")
+	@Length(min = 6, max = 20, message = "비밀번호 4자 이상 20자 이하")
 	private String pw;
+
+	@NotEmpty
+	@Length(min = 2, max = 5)
 	private String name;
+
 	private String nickname;
 	private String tell_ph;
+
+	@NotEmpty
+	@Pattern(regexp = "(010|011|016|017|018|019)-(\\d{3,4})-(\\d{4})", message = "잘못된 전화번호 형식입니다.")
 	private String cell_ph;
 	private String join_date;
+
+	@NotEmpty
+	private String addr;
 	private int point;
 	private int saving; // 적립금
 	private String birthday;
@@ -28,7 +51,7 @@ public class UserVo {
 	private int purchase_cnt;
 	private boolean islogin;
 
-	public int getNo() {
+	public long getNo() {
 		return no;
 	}
 
@@ -62,6 +85,10 @@ public class UserVo {
 
 	public String getJoin_date() {
 		return join_date;
+	}
+
+	public String getAddr() {
+		return addr;
 	}
 
 	public int getPoint() {
@@ -104,8 +131,8 @@ public class UserVo {
 		return islogin;
 	}
 
-	public void setNo(int no) {
-		this.no = no;
+	public void setNo(long l) {
+		this.no = l;
 	}
 
 	public void setId(String id) {
@@ -138,6 +165,10 @@ public class UserVo {
 
 	public void setJoin_date(String join_date) {
 		this.join_date = join_date;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 
 	public void setPoint(int point) {
@@ -183,10 +214,11 @@ public class UserVo {
 	@Override
 	public String toString() {
 		return "UserVo [no=" + no + ", id=" + id + ", email=" + email + ", pw=" + pw + ", name=" + name + ", nickname="
-				+ nickname + ", tell_ph=" + tell_ph + ", cell_ph=" + cell_ph + ", join_date=" + join_date + ", point="
-				+ point + ", saving=" + saving + ", birthday=" + birthday + ", account_number=" + account_number
-				+ ", massive_mount=" + massive_mount + ", grade=" + grade + ", email_recv=" + email_recv + ", sms_recv="
-				+ sms_recv + ", purchase_cnt=" + purchase_cnt + ", islogin=" + islogin + "]";
+				+ nickname + ", tell_ph=" + tell_ph + ", cell_ph=" + cell_ph + ", join_date=" + join_date + ", addr="
+				+ addr + ", point=" + point + ", saving=" + saving + ", birthday=" + birthday + ", account_number="
+				+ account_number + ", massive_mount=" + massive_mount + ", grade=" + grade + ", email_recv="
+				+ email_recv + ", sms_recv=" + sms_recv + ", purchase_cnt=" + purchase_cnt + ", islogin=" + islogin
+				+ "]";
 	}
 
 }

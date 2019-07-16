@@ -14,9 +14,8 @@ public class UserService {
 
 	// 회원 가입
 	public UserVo joinUser(UserVo userVo) {
-		UserVo result = new UserVo();
-		result.setNo(1);
-		return result;
+		userDao.joinUser(userVo);
+		return userVo;
 	}
 
 	// 회원 로그인
@@ -29,9 +28,9 @@ public class UserService {
 	}
 
 	// 회원 아이디 중복 체크 및 유효성 검사
-	public boolean checkUserId(String id) {
-		String returnId = userDao.checkId(id);
-		if (returnId.equals(id)) {
+	public boolean checkUserId(UserVo userVo) {
+		UserVo result = userDao.checkId(userVo);
+		if (result != null && userVo.getId().equals(result.getId())) {
 			return false;
 		}
 		return true;
@@ -40,6 +39,11 @@ public class UserService {
 	// 회원 정보 수정
 	public void modifyUser(UserVo userVo) {
 		userDao.modifyUser(userVo);
+	}
+
+	// 회원 탈퇴
+	public void secessionUser(UserVo userVo) {
+
 	}
 
 }

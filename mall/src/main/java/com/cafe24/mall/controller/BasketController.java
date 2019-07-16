@@ -14,6 +14,12 @@ public class BasketController {
 	@Autowired
 	private BasketService basketService;
 
+	// 바로구매
+	@RequestMapping(value = "/immediate")
+	public void immediatelyPurchase(ItemVo itemVo) {
+		basketService.immediatelyPurchase(itemVo);
+	}
+	
 	// 장바구니 저장
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public void addItemToBasket(ItemVo itemVo) {

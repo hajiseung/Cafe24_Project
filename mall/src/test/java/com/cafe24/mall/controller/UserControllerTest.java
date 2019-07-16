@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.mall.MemberEnum;
 import com.cafe24.mall.config.AppConfig;
 import com.cafe24.mall.config.TestWebConfig;
 import com.cafe24.mall.service.UserService;
@@ -52,31 +51,111 @@ public class UserControllerTest {
 	// 회원가입 Test
 	@Test
 	public void testUserJoin() throws Exception {
+
 		UserVo vo = new UserVo();
-		vo.setNo(1);
-		vo.setAccount_number("1111-222-333333");
-		vo.setBirthday("901006");
-		vo.setCell_ph("010-3333-7777");
-		vo.setEmail("tmdwlgk0109@naver.com");
-		vo.setEmail_recv(false);
-		vo.setGrade(MemberEnum.BRONZE);
+
+		// 정상 가입
 		vo.setId("tmdwlgk0109");
-		vo.setIslogin(false);
-		vo.setJoin_date("2019-07-09");
-		vo.setMassive_mount(999999);
+		vo.setEmail("tmdwlgk0109@naver.com");
+		vo.setPw("1q2w3e4r@");
 		vo.setName("하지승");
 		vo.setNickname("Nomacs");
-		vo.setPoint(0);
-		vo.setPurchase_cnt(0);
-		vo.setPw("1234");
-		vo.setSaving(0);
-		vo.setSms_recv(false);
+		vo.setAddr("동탄");
 		vo.setTell_ph(null);
-
+		vo.setCell_ph("010-3333-7777");
+		vo.setBirthday("901006");
+		vo.setAccount_number("1111-222-333333");
+		vo.setEmail_recv(false);
+		vo.setSms_recv(false);
+		vo.setNo(1L);
 		ResultActions resultActions = mockMvc
 				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is((int) vo.getNo())));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(vo.getNo())));
+		// 아이디 오류
+		vo.setId("tmdwlgk0109@@");
+		vo.setEmail("tmdwlgk0109@naver.com");
+		vo.setPw("1q2w3e4r");
+		vo.setName("하지승");
+		vo.setNickname("Nomacs");
+		vo.setAddr("동탄");
+		vo.setTell_ph(null);
+		vo.setCell_ph("010-3333-7777");
+		vo.setBirthday("901006");
+		vo.setAccount_number("1111-222-333333");
+		vo.setEmail_recv(false);
+		vo.setSms_recv(false);
+		resultActions = mockMvc
+				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+
+		// 이메일 오류
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109");
+		vo.setPw("1q2w3e4r");
+		vo.setName("하지승");
+		vo.setNickname("Nomacs");
+		vo.setAddr("동탄");
+		vo.setTell_ph(null);
+		vo.setCell_ph("010-3333-7777");
+		vo.setBirthday("901006");
+		vo.setAccount_number("1111-222-333333");
+		vo.setEmail_recv(false);
+		vo.setSms_recv(false);
+		resultActions = mockMvc
+				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+
+		// 전화번호 오류
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109@naver.com");
+		vo.setPw("1q2w3e4r");
+		vo.setName("하지승");
+		vo.setNickname("Nomacs");
+		vo.setAddr("동탄");
+		vo.setTell_ph(null);
+		vo.setCell_ph("111-3333-7777");
+		vo.setBirthday("901006");
+		vo.setAccount_number("1111-222-333333");
+		vo.setEmail_recv(false);
+		vo.setSms_recv(false);
+		resultActions = mockMvc
+				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+
+		// 비밀번호 오류
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109@naver.com");
+		vo.setPw("1");
+		vo.setName("하지승");
+		vo.setNickname("Nomacs");
+		vo.setAddr("동탄");
+		vo.setTell_ph(null);
+		vo.setCell_ph("010-3333-7777");
+		vo.setBirthday("901006");
+		vo.setAccount_number("1111-222-333333");
+		vo.setEmail_recv(false);
+		vo.setSms_recv(false);
+		resultActions = mockMvc
+				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+	}
+
+	// ID 중복 체크 TEST
+	@Test
+	public void testUserIdCheck() throws Exception {
+		UserVo vo = new UserVo();
+		// DB에 ID 없을 때
+		vo.setId("tmdwlgk01092");
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/user/checkuserid").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk()).andDo(print());
+
+		// DB에 ID 있을 때
+		vo.setId("asd");
+		resultActions = mockMvc.perform(
+				post("/api/user/checkuserid").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
 	// 로그인 Test
@@ -89,11 +168,8 @@ public class UserControllerTest {
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
-		resultActions
-		.andExpect(status().isOk()).andDo(print())
-		.andExpect(jsonPath("$.data.no", is(vo.getNo())))
-		.andExpect(jsonPath("$.data.id", is(vo.getId())))
-		.andExpect(jsonPath("$.data.pw", is(vo.getPw())));
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(vo.getNo())))
+				.andExpect(jsonPath("$.data.id", is(vo.getId()))).andExpect(jsonPath("$.data.pw", is(vo.getPw())));
 
 	}
 }
