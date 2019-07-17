@@ -76,9 +76,12 @@ public class UserController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "Login", required = true, dataType = "string", defaultValue = "") })
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public JSONResult loginUser(UserVo userVo) {
+	public ResponseEntity<JSONResult> loginUser(@RequestBody UserVo userVo) {
 		UserVo result = userService.loginUser(userVo);
-		return JSONResult.success(result);
+		if (result == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("로그인에 실패 하였습니다."));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
 	// 회원 아이디 중복 체크
@@ -86,6 +89,7 @@ public class UserController {
 	public ResponseEntity<JSONResult> checkuserId(@RequestBody UserVo userVo) {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<UserVo>> validatorResults = validator.validateProperty(userVo, "id");
+		
 		if (validatorResults.isEmpty() == false) {
 			for (ConstraintViolation<UserVo> validatorResult : validatorResults) {
 				String message = messageSource.getMessage("NotEmpty.userVo.id", null, LocaleContextHolder.getLocale());
@@ -94,7 +98,7 @@ public class UserController {
 		}
 
 		boolean resultB = userService.checkUserId(userVo);
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultB));
 	}
 
 	// 회원정보 수정

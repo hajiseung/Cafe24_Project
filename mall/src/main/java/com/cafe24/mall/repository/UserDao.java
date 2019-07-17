@@ -25,4 +25,9 @@ public class UserDao {
 		sqlSession.insert("user.insert", userVo);
 		return userVo;
 	}
+	
+	// 유저 로그인
+	public UserVo loginUser(UserVo userVo) {
+		return sqlSession.selectOne("user.loginUser",userVo);
+	}
 }

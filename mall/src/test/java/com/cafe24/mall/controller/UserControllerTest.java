@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -149,9 +150,15 @@ public class UserControllerTest {
 		vo.setId("tmdwlgk01092");
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/user/checkuserid").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		resultActions.andExpect(status().isOk()).andDo(print());
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data", is(true)));
 
 		// DB에 ID 있을 때
+		vo.setId("tmdwlgk0109");
+		resultActions = mockMvc.perform(
+				post("/api/user/checkuserid").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data", is(false)));
+
+		// ID형식 틀렸을 때
 		vo.setId("asd");
 		resultActions = mockMvc.perform(
 				post("/api/user/checkuserid").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
@@ -162,14 +169,45 @@ public class UserControllerTest {
 	@Test
 	public void testUserLogin() throws Exception {
 		UserVo vo = new UserVo();
-		vo.setNo(1);
-		vo.setId("hajiseung");
-		vo.setPw("1234");
+
+		// ID/PW 제대로 입력
+		vo.setId("tmdwlgk0109");
+		vo.setPw("1q2w3e4r@");
+		vo.setNo(1L);
+
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(vo.getNo())))
-				.andExpect(jsonPath("$.data.id", is(vo.getId()))).andExpect(jsonPath("$.data.pw", is(vo.getPw())));
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is((int) vo.getNo())));
 
+		// PW 입력 오류
+		vo.setId("tmdwlgk0109");
+		vo.setPw("1q2w3e4r");
+		vo.setNo(1L);
+
+		resultActions = mockMvc.perform(
+				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+
+		// ID 입력 오류
+		vo.setId("tmdwlgk010");
+		vo.setPw("1q2w3e4r@");
+		vo.setNo(1L);
+
+		resultActions = mockMvc.perform(
+				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+
+		// ID,PW 입력 오류
+		vo.setId("tmdwlgk010");
+		vo.setPw("1q2w3e");
+		vo.setNo(1L);
+		
+		resultActions = mockMvc.perform(
+				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
+
 }

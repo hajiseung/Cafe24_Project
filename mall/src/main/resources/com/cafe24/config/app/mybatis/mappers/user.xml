@@ -3,7 +3,7 @@
 
 <mapper namespace="user">
 
-<!-- 회원가입 -->
+	<!-- 회원가입 -->
 	<insert id="insert" parameterType="uservo">
 	<![CDATA[
 			insert into member 
@@ -16,10 +16,20 @@
 		]]>
 		</selectKey>
 	</insert>
+
+	<select id="loginUser" parameterType="uservo" resultType="uservo">
+	<![CDATA[
+		select no from member where id=#{id} and pw=#{pw}
+	]]>
+	</select>
+
 	<!-- ID 유무 검사 -->
-	<select id="userIdCheck" parameterType="uservo" resultType="uservo">	
+	<select id="userIdCheck" parameterType="uservo"
+		resultType="uservo">	
 		<![CDATA[
 			select id from member where id = #{id}		
 		]]>
 	</select>
+
+
 </mapper>

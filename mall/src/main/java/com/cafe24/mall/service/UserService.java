@@ -20,11 +20,7 @@ public class UserService {
 
 	// 회원 로그인
 	public UserVo loginUser(UserVo userVo) {
-		UserVo result = new UserVo();
-		result.setNo(1);
-		result.setId("hajiseung");
-		result.setPw("1234");
-		return result;
+		return userDao.loginUser(userVo);
 	}
 
 	// 회원 아이디 중복 체크 및 유효성 검사
