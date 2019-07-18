@@ -56,10 +56,14 @@ public class AdminControllerTest {
 	public void testAdminInsertItem() throws Exception {
 		List<String> option = new ArrayList<>();
 		List<String> subphoto = new ArrayList<>();
+		List<Boolean> isSubPhoto = new ArrayList<Boolean>();
 		option.add("빨강");
 		option.add("노랑");
 		subphoto.add("사진1");
 		subphoto.add("사진2");
+		isSubPhoto.add(true);
+		isSubPhoto.add(false);
+		
 
 		ItemVo vo = new ItemVo();
 		vo.setTitle("티셔츠");
@@ -67,7 +71,7 @@ public class AdminControllerTest {
 		vo.setAvailable_amount(100);
 		vo.setDesc("설명");
 		vo.setDisplaystatus(false);
-		vo.setIs_sub_photo(false);
+		vo.setIs_sub_photo(isSubPhoto);
 		vo.setLow_category("상의");
 		vo.setMain_photo("메인포토");
 		vo.setName(option);

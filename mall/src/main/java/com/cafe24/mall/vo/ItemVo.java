@@ -25,7 +25,7 @@ public class ItemVo {
 	private MultipartFile subPhoto;
 	private String main_photo;
 	private List<String> sub_photo;
-	private boolean is_sub_photo;
+	private List<Boolean> is_sub_photo;
 
 	// item_option
 	private List<String> name;
@@ -94,7 +94,7 @@ public class ItemVo {
 		return sub_photo;
 	}
 
-	public boolean isIs_sub_photo() {
+	public List<Boolean> getIs_sub_photo() {
 		return is_sub_photo;
 	}
 
@@ -170,7 +170,7 @@ public class ItemVo {
 		this.sub_photo = sub_photo;
 	}
 
-	public void setIs_sub_photo(boolean is_sub_photo) {
+	public void setIs_sub_photo(List<Boolean> is_sub_photo) {
 		this.is_sub_photo = is_sub_photo;
 	}
 
