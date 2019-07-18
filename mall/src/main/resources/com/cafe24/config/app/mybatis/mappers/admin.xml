@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+	<!-- 카테고리 등록 -->
+	<insert id="addCategory" parameterType="itemvo">
+		<![CDATA[
+		insert into item_category values(null, #{top_category},#{low_category})
+		]]>
+		<selectKey keyProperty="category_no" resultType="long"
+			order="AFTER">
+		<![CDATA[
+			select last_insert_id() as category_no
+		]]>
+		</selectKey>
+	</insert>
+
+	<!-- 물품 등록 -->
+	<insert id="addItem" parameterType="itemvo">
+	<![CDATA[
+		insert into item
+		values(null,#{category_no},#{title},#{desc})	
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<![CDATA[
+			select last_insert_id()
+		]]>
+		</selectKey>
+	</insert>
+
+	<!-- 물품 등록 -->
+	<insert id="addItemDetail" parameterType="itemvo">
+	<![CDATA[
+		insert into item_detail
+		values(null,#{no},#{amount},#{available_amount},#{price},#{non_amount},#{displaystatus},#{salestatus},#{reg_date})
+		]]>
+	</insert>
+
+	<!-- 물품 옵션 등록 -->
+	<insert id="addItemOption" parameterType="map">
+	<![CDATA[
+		insert into item_option
+		values(null,#{no},#{option})
+	]]>
+	</insert>
+
+	<!-- 물품 사진 등록 -->
+	<insert id="addItemPhoto" parameterType="itemvo">
+	 <![CDATA[ 
+	 	insert into item_photo values(null,#{no},#{main_photo},#{sub_photo},#{is_sub_photo}) 
+	]]>
+	</insert>
+</mapper>

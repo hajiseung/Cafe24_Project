@@ -11,5 +11,6 @@
 	<mappers>
 		<!-- sql문에 result와 parameter을 매핑하는 파일 -->
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/admin.xml" />
 	</mappers>
 </configuration>
