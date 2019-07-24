@@ -33,13 +33,13 @@ public class UserService {
 	}
 
 	// 회원 정보 수정
-	public void modifyUser(UserVo userVo) {
-		userDao.modifyUser(userVo);
+	public int modifyUser(UserVo userVo) {
+		return userDao.modifyUser(userVo);
 	}
 
 	// 회원 탈퇴
-	public void secessionUser(UserVo userVo) {
-
+	public int secessionUser(UserVo userVo) {
+		return userDao.deleteUser(userVo);
 	}
 
 }

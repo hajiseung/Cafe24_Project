@@ -89,7 +89,7 @@ public class UserController {
 	public ResponseEntity<JSONResult> checkuserId(@RequestBody UserVo userVo) {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<UserVo>> validatorResults = validator.validateProperty(userVo, "id");
-		
+
 		if (validatorResults.isEmpty() == false) {
 			for (ConstraintViolation<UserVo> validatorResult : validatorResults) {
 				String message = messageSource.getMessage("NotEmpty.userVo.id", null, LocaleContextHolder.getLocale());
@@ -101,11 +101,24 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultB));
 	}
 
+	// 회원정보 수정 폼
+
 	// 회원정보 수정
-	@RequestMapping(value = "/modifyuser", method = RequestMethod.POST)
-	public String modifyUser(UserVo userVo) {
-		userService.modifyUser(userVo);
-		return "redirect:/";
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> modifyUser(@RequestBody @Valid UserVo userVo, BindingResult result) {
+
+		// 오류시 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		System.out.println(userVo);
+		int sqlresult = userService.modifyUser(userVo);
+		System.out.println(sqlresult);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(userVo));
+//		return "redirect:/";
 	}
 
 	// 회원 로그아웃 (인터페이스로 옮길 예정)
@@ -117,9 +130,11 @@ public class UserController {
 	}
 
 	// 회원 탈퇴
-	@RequestMapping(value = "/secession", method = RequestMethod.POST)
-	public void secessionUser(UserVo userVo) {
-		userService.secessionUser(userVo);
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> secessionUser(@RequestBody UserVo userVo) {
+		System.out.println(userVo);
+		int result = userService.secessionUser(userVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
 }

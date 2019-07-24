@@ -31,7 +31,8 @@
 	</insert>
 
 	<!-- 비회원 테이블 번호 받아오기 -->
-	<select id="getNonMemberNo" parameterType="nonuservo" resultType="nonuservo">
+	<select id="getNonMemberNo" parameterType="nonuservo"
+		resultType="nonuservo">
 	<![CDATA[
 			select no from non_member where mac_addr=#{mac_addr}
 		]]>
@@ -46,11 +47,37 @@
 	</select>
 
 	<!-- ID 유무 검사 -->
-	<select id="userIdCheck" parameterType="uservo" resultType="uservo">	
+	<select id="userIdCheck" parameterType="uservo"
+		resultType="uservo">	
 		<![CDATA[
 			select id from member where id = #{id}		
 		]]>
 	</select>
 
+	<!-- 회원 정보 수정 -->
+	<update id="modifyUser" parameterType="uservo">
+	<![CDATA[
+		update member set
+		email=#{email},
+		]]>
+		<if test="pw!=''">
+		<![CDATA[
+		pw=#{pw},
+		]]>
+		</if>
+		<![CDATA[
+		nickname=#{nickname},
+		tell_ph=#{tell_ph},
+		cell_ph=#{cell_ph},
+		addr=#{addr},
+		email_recv=#{email_recv},
+		sms_recv=#{sms_recv}
+	]]>
+	</update>
 
+	<delete id="delete" parameterType="uservo">
+	<![CDATA[
+		delete from member where no = #{no}
+	]]>
+	</delete>
 </mapper>

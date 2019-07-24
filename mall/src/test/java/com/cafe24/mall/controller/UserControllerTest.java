@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -137,7 +136,7 @@ public class UserControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
-	// ID 중복 체크 TEST
+	// ID 중복 체크 Test
 	@Test
 	public void testUserIdCheck() throws Exception {
 		UserVo vo = new UserVo();
@@ -198,11 +197,43 @@ public class UserControllerTest {
 		vo.setId("tmdwlgk010");
 		vo.setPw("1q2w3e");
 		vo.setNo(1L);
-		
+
 		resultActions = mockMvc.perform(
 				post("/api/user/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-		
+
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
+	// 회원 정보 수정 Test
+	@Test
+	public void testUserModify() throws Exception {
+		UserVo vo = new UserVo();
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109@daum.com");
+		vo.setPw("1q2w3e4r@");
+		vo.setName("하지승");
+		vo.setAddr("DongTan");
+		vo.setTell_ph(null);
+		vo.setCell_ph("010-3337-7686");
+		vo.setBirthday("901006");
+		vo.setEmail_recv(true);
+		vo.setSms_recv(true);
+
+		vo.setNickname("Nellas");
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print())/* .andExpect(jsonPath("$.data.no", is(1))) */;
+	}
+
+	// 회원 삭제 Test
+	@Test
+	public void testUserDelete() throws Exception {
+		UserVo vo = new UserVo();
+		vo.setNo(2);
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/user/delete").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(1)));
+	}
 }

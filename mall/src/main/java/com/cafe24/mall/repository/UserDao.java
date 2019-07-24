@@ -17,8 +17,9 @@ public class UserDao {
 		return sqlSession.selectOne("user.userIdCheck", userVo);
 	}
 
-	public void modifyUser(UserVo userVo) {
-
+	// 회원 정보 수정
+	public int modifyUser(UserVo userVo) {
+		return sqlSession.update("user.modifyUser", userVo);
 	}
 
 	// 회원 가입
@@ -38,7 +39,13 @@ public class UserDao {
 		return nonUserVo;
 	}
 
+	// 비회원 PK 리턴
 	public NonUserVo getNonMemberNo(NonUserVo nonUserVo) {
 		return sqlSession.selectOne("user.getNonMemberNo", nonUserVo);
+	}
+
+	// 회원 삭제
+	public int deleteUser(UserVo userVo) {
+		return sqlSession.delete("user.delete", userVo);
 	}
 }
