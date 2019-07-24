@@ -43,7 +43,6 @@ public class UserVo {
 	private int point;
 	private int saving; // 적립금
 	private String birthday;
-	private String account_number; // 계좌번호
 	private int massive_mount; // 누적금액
 	private MemberEnum grade;
 	private boolean email_recv;
@@ -101,10 +100,6 @@ public class UserVo {
 
 	public String getBirthday() {
 		return birthday;
-	}
-
-	public String getAccount_number() {
-		return account_number;
 	}
 
 	public int getMassive_mount() {
@@ -183,10 +178,6 @@ public class UserVo {
 		this.birthday = birthday;
 	}
 
-	public void setAccount_number(String account_number) {
-		this.account_number = account_number;
-	}
-
 	public void setMassive_mount(int massive_mount) {
 		this.massive_mount = massive_mount;
 	}
@@ -215,10 +206,9 @@ public class UserVo {
 	public String toString() {
 		return "UserVo [no=" + no + ", id=" + id + ", email=" + email + ", pw=" + pw + ", name=" + name + ", nickname="
 				+ nickname + ", tell_ph=" + tell_ph + ", cell_ph=" + cell_ph + ", join_date=" + join_date + ", addr="
-				+ addr + ", point=" + point + ", saving=" + saving + ", birthday=" + birthday + ", account_number="
-				+ account_number + ", massive_mount=" + massive_mount + ", grade=" + grade + ", email_recv="
-				+ email_recv + ", sms_recv=" + sms_recv + ", purchase_cnt=" + purchase_cnt + ", islogin=" + islogin
-				+ "]";
+				+ addr + ", point=" + point + ", saving=" + saving + ", birthday=" + birthday + ", massive_mount="
+				+ massive_mount + ", grade=" + grade + ", email_recv=" + email_recv + ", sms_recv=" + sms_recv
+				+ ", purchase_cnt=" + purchase_cnt + ", islogin=" + islogin + "]";
 	}
 
 }

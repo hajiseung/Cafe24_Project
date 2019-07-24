@@ -2,28 +2,19 @@ package com.cafe24.mall.vo;
 
 public class NonUserVo {
 
-	private int no;
-	private String account;
+	private long no;
 	private String mac_addr;
 
-	public int getNo() {
+	public long getNo() {
 		return no;
-	}
-
-	public String getAccount() {
-		return account;
 	}
 
 	public String getMac_addr() {
 		return mac_addr;
 	}
 
-	public void setNo(int no) {
+	public void setNo(long no) {
 		this.no = no;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
 	}
 
 	public void setMac_addr(String mac_addr) {
@@ -32,6 +23,7 @@ public class NonUserVo {
 
 	@Override
 	public String toString() {
-		return "NonUserVo [no=" + no + ", account=" + account + ", mac_addr=" + mac_addr + "]";
+		return "NonUserVo [no=" + no + ", mac_addr=" + mac_addr + "]";
 	}
+
 }

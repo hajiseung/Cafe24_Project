@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.mall.vo.ItemVo;
 
@@ -15,6 +16,7 @@ public class AdminDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	@Transactional
 	public ItemVo addItem(ItemVo itemVo) {
 
 		Map<String, Object> map = new HashMap<>();

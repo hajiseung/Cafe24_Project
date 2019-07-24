@@ -63,9 +63,10 @@ public class AdminControllerTest {
 		subphoto.add("사진2");
 		isSubPhoto.add(true);
 		isSubPhoto.add(false);
-		
 
 		ItemVo vo = new ItemVo();
+
+		// Item Add 성공
 		vo.setTitle("티셔츠");
 		vo.setAmount(100);
 		vo.setAvailable_amount(100);
@@ -86,6 +87,27 @@ public class AdminControllerTest {
 				post("/api/admin/item/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
+
+		// Item Add 실패
+		vo.setTitle(null);
+		vo.setAmount(100);
+		vo.setAvailable_amount(100);
+		vo.setDesc("설명");
+		vo.setDisplaystatus(false);
+		vo.setIs_sub_photo(isSubPhoto);
+		vo.setLow_category("상의");
+		vo.setMain_photo("메인포토");
+		vo.setName(option);
+		vo.setPrice(10000);
+		vo.setReg_date("2019-07-10 00:00:00");
+		vo.setSalestatus(true);
+		vo.setSub_photo(subphoto);
+		vo.setTop_category("옷");
+
+		resultActions = mockMvc.perform(
+				post("/api/admin/item/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
 }

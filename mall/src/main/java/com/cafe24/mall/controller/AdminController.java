@@ -1,12 +1,17 @@
 package com.cafe24.mall.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.mall.dto.JSONResult;
@@ -34,7 +39,14 @@ public class AdminController {
 
 	// 물품 등록
 	@RequestMapping(value = "/item/add", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> addItem(@RequestBody ItemVo itemVo) {
+	public ResponseEntity<JSONResult> addItem(@RequestBody @Valid ItemVo itemVo, BindingResult result) {
+		// 가입 오류시 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
 		ItemVo vo = adminService.addItem(itemVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
 	}

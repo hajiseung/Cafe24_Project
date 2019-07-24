@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- insert into basket values(null,1,null,1,(select (price*0.1) from item_detail 
+	where item_no=1),(select price*변수 from item_detail where item_no=1)) -->
+<mapper namespace="basket">
+	<!-- 장바구니 추가 -->
+	<insert id="addItemToBasket" parameterType="basketvo">
+	<![CDATA[
+		insert into basket 
+		values(null,
+	]]>
+		<choose>
+			<when test="member_no == 0">
+		<![CDATA[
+			null, #{nonmember_no},
+			]]>
+			</when>
+			<otherwise>
+		<![CDATA[
+		#{member_no}, null,
+		]]>
+			</otherwise>
+		</choose>
+	<![CDATA[
+	 #{item_no},#{item_count}, (select (price*0.1) from item_detail where item_no=#{item_no}), 
+		(select (price*#{item_count}) from item_detail where item_no=#{item_no}))
+		]]>
+		<selectKey keyProperty="basket_no" resultType="long"
+			order="AFTER">
+		<![CDATA[
+			select last_insert_id()
+		]]>
+		</selectKey>
+	</insert>
+
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteItemToBasket" parameterType="basketvo">
+	<![CDATA[
+		delete from basket
+		where
+	]]>
+		<choose>
+			<when test="member_no == 0">
+			<![CDATA[
+				nonmember_no=#{nonmember_no}  
+			]]>
+			</when>
+			<otherwise>
+			<![CDATA[
+				member_no=#{member_no}  
+			]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
+		and item_no=#{item_no} 
+		]]>
+	</delete>
+</mapper>

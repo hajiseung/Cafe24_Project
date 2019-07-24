@@ -65,7 +65,6 @@ public class UserControllerTest {
 		vo.setTell_ph(null);
 		vo.setCell_ph("010-3333-7777");
 		vo.setBirthday("901006");
-		vo.setAccount_number("1111-222-333333");
 		vo.setEmail_recv(false);
 		vo.setSms_recv(false);
 		vo.setNo(1L);
@@ -83,7 +82,6 @@ public class UserControllerTest {
 		vo.setTell_ph(null);
 		vo.setCell_ph("010-3333-7777");
 		vo.setBirthday("901006");
-		vo.setAccount_number("1111-222-333333");
 		vo.setEmail_recv(false);
 		vo.setSms_recv(false);
 		resultActions = mockMvc
@@ -100,7 +98,6 @@ public class UserControllerTest {
 		vo.setTell_ph(null);
 		vo.setCell_ph("010-3333-7777");
 		vo.setBirthday("901006");
-		vo.setAccount_number("1111-222-333333");
 		vo.setEmail_recv(false);
 		vo.setSms_recv(false);
 		resultActions = mockMvc
@@ -117,7 +114,6 @@ public class UserControllerTest {
 		vo.setTell_ph(null);
 		vo.setCell_ph("111-3333-7777");
 		vo.setBirthday("901006");
-		vo.setAccount_number("1111-222-333333");
 		vo.setEmail_recv(false);
 		vo.setSms_recv(false);
 		resultActions = mockMvc
@@ -134,7 +130,6 @@ public class UserControllerTest {
 		vo.setTell_ph(null);
 		vo.setCell_ph("010-3333-7777");
 		vo.setBirthday("901006");
-		vo.setAccount_number("1111-222-333333");
 		vo.setEmail_recv(false);
 		vo.setSms_recv(false);
 		resultActions = mockMvc

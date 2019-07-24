@@ -2,21 +2,33 @@ package com.cafe24.mall.vo;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ItemVo {
 	// item
 	private long no;
 	private long category_no;
+	@NotNull
 	private String title;
 	private String desc;
 
 	// item_detail
+	@NotNull
 	private long amount;
+
+	@NotNull
 	private long available_amount;
+
+	@NotNull
 	private long price;
+	@NotNull
 	private boolean non_amount;
+	@NotNull
 	private boolean displaystatus;
+	@NotNull
 	private boolean salestatus;
 	private String reg_date;
 
@@ -31,7 +43,9 @@ public class ItemVo {
 	private List<String> name;
 
 	// item_category
+	@NotNull
 	private String top_category;
+	@NotNull
 	private String low_category;
 
 	public long getNo() {
