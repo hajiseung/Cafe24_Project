@@ -46,8 +46,13 @@
 
 	<!-- 물품 사진 등록 -->
 	<insert id="addItemPhoto" parameterType="itemvo">
-	 <![CDATA[ 
+	<![CDATA[ 
 	 	insert into item_photo values(null,#{no},#{main_photo},#{sub_photo},#{is_sub_photo}) 
 	]]>
 	</insert>
+	<select id="getUserList" resultType="uservo">
+	<![CDATA[
+		select no, id, email, name, nickname, addr, tell_ph, cell_ph, join_date, point, saving, bitrhday, massive_mount, upper(grade), email_recv, sms_recv, purchase_cnt from member limit 0,10
+	]]>
+	</select>
 </mapper>

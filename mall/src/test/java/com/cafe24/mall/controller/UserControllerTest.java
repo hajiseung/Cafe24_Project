@@ -48,12 +48,19 @@ public class UserControllerTest {
 		assertNotNull(userService);
 	}
 
+	@Test
+	public void test() throws Exception {
+		for (int i = 0; i < 100; i++) {
+			testUserJoin();
+		}
+	}
+
 	// 회원가입 Test
 	@Test
 	public void testUserJoin() throws Exception {
 
 		UserVo vo = new UserVo();
-
+		ResultActions resultActions;
 		// 정상 가입
 		vo.setId("tmdwlgk0109");
 		vo.setEmail("tmdwlgk0109@naver.com");
@@ -67,10 +74,9 @@ public class UserControllerTest {
 		vo.setEmail_recv(false);
 		vo.setSms_recv(false);
 		vo.setNo(1L);
-		ResultActions resultActions = mockMvc
+		resultActions = mockMvc
 				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is((int) vo.getNo())));
-
 		// 아이디 오류
 		vo.setId("tmdwlgk0109@@");
 		vo.setEmail("tmdwlgk0109@naver.com");

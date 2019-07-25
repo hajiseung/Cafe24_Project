@@ -1,6 +1,7 @@
 package com.cafe24.mall.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.UserVo;
 
 @Repository
 public class AdminDao {
@@ -45,6 +47,10 @@ public class AdminDao {
 			map.clear();
 		}
 		return itemVo;
+	}
+
+	public List<UserVo> getUserList() {
+		return sqlSession.selectList("admin.getUserList");
 	}
 
 }

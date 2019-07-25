@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.AdminService;
 import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.UserVo;
 
 @RestController
 @RequestMapping(value = "/api/admin")
@@ -60,7 +61,8 @@ public class AdminController {
 	// 회원 관리
 	@RequestMapping(value = "/memberlist", method = RequestMethod.GET)
 	public void memberList() {
-		adminService.memberList();
+		List<UserVo> list = adminService.memberList();
+		System.out.println(list);
 	}
 
 	// 주문 관리 페이지 호출

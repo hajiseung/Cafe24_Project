@@ -52,6 +52,7 @@ public class AdminControllerTest {
 		assertNotNull(adminService);
 	}
 
+	// 물품 등록 Test
 	@Test
 	public void testAdminInsertItem() throws Exception {
 		List<String> option = new ArrayList<>();
@@ -110,4 +111,12 @@ public class AdminControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
+	// 사용자 출력 Test
+	@Test
+	public void testUserList() throws Exception {
+
+		ResultActions resultActions = mockMvc.perform(get("/api/admin/memberlist"));
+
+		resultActions.andExpect(status().isOk()).andDo(print());
+	}
 }
