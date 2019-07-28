@@ -23,6 +23,7 @@ import com.cafe24.mall.config.AppConfig;
 import com.cafe24.mall.config.TestWebConfig;
 import com.cafe24.mall.service.BasketService;
 import com.cafe24.mall.vo.BasketVo;
+import com.cafe24.mall.vo.NonUserVo;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -51,16 +52,31 @@ public class BasketControllerTest {
 	@Test
 	public void testInsertBaseket() throws Exception {
 		BasketVo vo = new BasketVo();
+		NonUserVo userVo = new NonUserVo();
+		// 회원 장바구니 추가
+		vo.setItem_no(1L);
+		vo.setMember_no(1L);
 		vo.setItem_count(2L);
 		vo.setAccmulate(100);
+		vo.setOption_no(1L);
+		vo.setNonUserVo(userVo);
 
 		ResultActions resultActions = mockMvc.perform(
-				get("/api/basket/add/1/1").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				post("/api/basket/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
-		
-		resultActions = mockMvc.perform(get("/api/basket/add/nonMemberNo/1").contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(vo)));
+
+		// 비회원 장바구니 추가
+		userVo.setMac_addr("nomem1");
+		vo.setItem_no(1L);
+		vo.setMember_no(0L);
+		vo.setItem_count(2L);
+		vo.setAccmulate(100);
+		vo.setOption_no(1L);
+		vo.setNonUserVo(userVo);
+
+		resultActions = mockMvc.perform(
+				post("/api/basket/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
 	}
@@ -69,14 +85,21 @@ public class BasketControllerTest {
 	@Test
 	public void testDeleteBasket() throws Exception {
 		BasketVo vo = new BasketVo();
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/basket/delete/nonMemberNo/1/1").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		ResultActions resultActions = mockMvc.perform(get("/api/basket/delete/nomem1/1/2")
+				.contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
-		
-//		resultActions = mockMvc.perform(
-//				get("/api/basket/delete/nonMemberNo/1/1").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-//		
-//		resultActions.andExpect(status().isOk()).andDo(print());
+	}
+
+	// 장바구니 리스트
+	@Test
+	public void testBasketList() throws Exception {
+		BasketVo vo = new BasketVo();
+		vo.setMember_no(1);
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/basket/list").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print());
 	}
 }

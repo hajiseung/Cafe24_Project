@@ -55,15 +55,16 @@ public class AdminControllerTest {
 	// 물품 등록 Test
 	@Test
 	public void testAdminInsertItem() throws Exception {
-		List<String> option = new ArrayList<>();
-		List<String> subphoto = new ArrayList<>();
-		List<Boolean> isSubPhoto = new ArrayList<Boolean>();
+		List<String> option = new ArrayList<String>();
+		List<Boolean> isMain = new ArrayList<Boolean>();
+		List<String> photo = new ArrayList<String>();
+
 		option.add("빨강");
 		option.add("노랑");
-		subphoto.add("사진1");
-		subphoto.add("사진2");
-		isSubPhoto.add(true);
-		isSubPhoto.add(false);
+		isMain.add(true);
+		isMain.add(false);
+		photo.add("사진1");
+		photo.add("사진2");
 
 		ItemVo vo = new ItemVo();
 
@@ -73,16 +74,16 @@ public class AdminControllerTest {
 		vo.setAvailable_amount(100);
 		vo.setDesc("설명");
 		vo.setDisplaystatus(false);
-		vo.setIs_sub_photo(isSubPhoto);
 		vo.setLow_category("상의");
-		vo.setMain_photo("메인포토");
 		vo.setName(option);
 		vo.setNon_amount(false);
 		vo.setPrice(10000);
 		vo.setReg_date("2019-07-10 00:00:00");
 		vo.setSalestatus(true);
-		vo.setSub_photo(subphoto);
 		vo.setTop_category("옷");
+		vo.setPhoto(photo);
+		vo.setIs_main(isMain);
+		
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/admin/item/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
@@ -95,15 +96,14 @@ public class AdminControllerTest {
 		vo.setAvailable_amount(100);
 		vo.setDesc("설명");
 		vo.setDisplaystatus(false);
-		vo.setIs_sub_photo(isSubPhoto);
 		vo.setLow_category("상의");
-		vo.setMain_photo("메인포토");
 		vo.setName(option);
 		vo.setPrice(10000);
 		vo.setReg_date("2019-07-10 00:00:00");
 		vo.setSalestatus(true);
-		vo.setSub_photo(subphoto);
 		vo.setTop_category("옷");
+		vo.setPhoto(photo);
+		vo.setIs_main(isMain);
 
 		resultActions = mockMvc.perform(
 				post("/api/admin/item/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));

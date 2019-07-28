@@ -47,7 +47,7 @@
 	<!-- 물품 사진 등록 -->
 	<insert id="addItemPhoto" parameterType="itemvo">
 	<![CDATA[ 
-	 	insert into item_photo values(null,#{no},#{main_photo},#{sub_photo},#{is_sub_photo}) 
+	 	insert into item_photo values(null,#{no},#{photo},#{is_main}) 
 	]]>
 	</insert>
 	<select id="getUserList" resultType="uservo">

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ItemVo {
@@ -33,11 +32,9 @@ public class ItemVo {
 	private String reg_date;
 
 	// item_photo
-	private MultipartFile mainPhoto;
-	private MultipartFile subPhoto;
-	private String main_photo;
-	private List<String> sub_photo;
-	private List<Boolean> is_sub_photo;
+	private List<MultipartFile> multiPartPhoto;
+	private List<String> photo;
+	private List<Boolean> is_main;
 
 	// item_option
 	private List<String> name;
@@ -92,24 +89,16 @@ public class ItemVo {
 		return reg_date;
 	}
 
-	public MultipartFile getMainPhoto() {
-		return mainPhoto;
+	public List<MultipartFile> getMultiPartPhoto() {
+		return multiPartPhoto;
 	}
 
-	public MultipartFile getSubPhoto() {
-		return subPhoto;
+	public List<String> getPhoto() {
+		return photo;
 	}
 
-	public String getMain_photo() {
-		return main_photo;
-	}
-
-	public List<String> getSub_photo() {
-		return sub_photo;
-	}
-
-	public List<Boolean> getIs_sub_photo() {
-		return is_sub_photo;
+	public List<Boolean> getIs_main() {
+		return is_main;
 	}
 
 	public List<String> getName() {
@@ -168,24 +157,16 @@ public class ItemVo {
 		this.reg_date = reg_date;
 	}
 
-	public void setMainPhoto(MultipartFile mainPhoto) {
-		this.mainPhoto = mainPhoto;
+	public void setMultiPartPhoto(List<MultipartFile> multiPartPhoto) {
+		this.multiPartPhoto = multiPartPhoto;
 	}
 
-	public void setSubPhoto(MultipartFile subPhoto) {
-		this.subPhoto = subPhoto;
+	public void setPhoto(List<String> photo) {
+		this.photo = photo;
 	}
 
-	public void setMain_photo(String main_photo) {
-		this.main_photo = main_photo;
-	}
-
-	public void setSub_photo(List<String> sub_photo) {
-		this.sub_photo = sub_photo;
-	}
-
-	public void setIs_sub_photo(List<Boolean> is_sub_photo) {
-		this.is_sub_photo = is_sub_photo;
+	public void setIs_main(List<Boolean> is_main) {
+		this.is_main = is_main;
 	}
 
 	public void setName(List<String> name) {
@@ -205,9 +186,8 @@ public class ItemVo {
 		return "ItemVo [no=" + no + ", category_no=" + category_no + ", title=" + title + ", desc=" + desc + ", amount="
 				+ amount + ", available_amount=" + available_amount + ", price=" + price + ", non_amount=" + non_amount
 				+ ", displaystatus=" + displaystatus + ", salestatus=" + salestatus + ", reg_date=" + reg_date
-				+ ", mainPhoto=" + mainPhoto + ", subPhoto=" + subPhoto + ", main_photo=" + main_photo + ", sub_photo="
-				+ sub_photo + ", is_sub_photo=" + is_sub_photo + ", name=" + name + ", top_category=" + top_category
-				+ ", low_category=" + low_category + "]";
+				+ ", multiPartPhoto=" + multiPartPhoto + ", photo=" + photo + ", is_main=" + is_main + ", name=" + name
+				+ ", top_category=" + top_category + ", low_category=" + low_category + "]";
 	}
 
 }

@@ -30,30 +30,35 @@ public class BasketController {
 	}
 
 	// 장바구니 저장
-	@RequestMapping(value = { "/add/{memberNo:[\\d]+}/{itemNo}",
-			"/add/{nonMember}/{itemNo}" }, method = RequestMethod.GET)
-	public ResponseEntity<JSONResult> addItemToBasket(@PathVariable Optional<Integer> memberNo,
-			@PathVariable Optional<String> nonMember, @PathVariable("itemNo") int itemNo,
-			@RequestBody BasketVo basketVo) {
-		if (memberNo.isPresent()) {
-			basketVo.setMember_no(memberNo.get());
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> addItemToBasket(@RequestBody BasketVo basketVo) {
+		NonUserVo isRegNonUser = new NonUserVo();
+		if (basketVo.getMember_no() != 0) {
+			basketVo.setMember_no(basketVo.getMember_no());
 			basketVo.setNonmember_no(0);
 		} else {
-			// 비회원 테이블 추가
-			NonUserVo nonUserVo = basketService.addNonMember(nonMember.get());
-			// 비회원 구분번호 설정
-			basketVo.setNonmember_no(nonUserVo.getNo());
-			basketVo.setMember_no(0);
+			NonUserVo tmp = basketService.getNonMemberNo(basketVo.getNonUserVo().getMac_addr());
+			isRegNonUser.setNo(tmp == null ? 0 : tmp.getNo());
+
+			// 비회원 테이블에 이미 등록되어있는 비회원일때
+			if (isRegNonUser.getNo() != 0) {
+				basketVo.setNonmember_no(isRegNonUser.getNo());
+			} else {
+				// 비회원 테이블 추가
+				isRegNonUser.setNo((basketService.addNonMember(basketVo.getNonUserVo().getMac_addr())).getNo());
+				// 비회원 구분번호 설정
+				basketVo.setNonmember_no(isRegNonUser.getNo());
+				basketVo.setMember_no(0);
+			}
 		}
-		basketVo.setItem_no(itemNo);
 		basketVo = basketService.addItemToBasket(basketVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(basketVo));
 	}
 
 	// 장바구니 리스트 호출
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void getBasketList() {
-		basketService.getBasketList();
+	public void getBasketList(@RequestBody BasketVo basketVo) {
+//		basketService.getBasketList(basketVo);
 	}
 
 	// 장바구니-물품 삭제
@@ -62,7 +67,7 @@ public class BasketController {
 	public ResponseEntity<JSONResult> deleteItemFromBasket(@PathVariable Optional<Integer> memberNo,
 			@PathVariable Optional<String> nonMember, @PathVariable("itemNo") int itemNo,
 			@PathVariable("basketNo") int basketNo, @RequestBody BasketVo basketVo) {
-		
+
 		if (memberNo.isPresent()) {
 			basketVo.setMember_no(memberNo.get());
 			basketVo.setNonmember_no(0);
@@ -73,7 +78,7 @@ public class BasketController {
 		}
 		basketVo.setNo(basketNo);
 		basketVo.setItem_no(itemNo);
-		
+
 		System.out.println(basketVo);
 		basketService.deleteItemFromBasket(basketVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(basketVo));

@@ -2,7 +2,7 @@ package com.cafe24.mall.vo;
 
 public class NonUserVo {
 
-	private long no;
+	private long no = 0;
 	private String mac_addr;
 
 	public long getNo() {

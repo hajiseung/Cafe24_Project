@@ -48,13 +48,6 @@ public class UserControllerTest {
 		assertNotNull(userService);
 	}
 
-	@Test
-	public void test() throws Exception {
-		for (int i = 0; i < 100; i++) {
-			testUserJoin();
-		}
-	}
-
 	// 회원가입 Test
 	@Test
 	public void testUserJoin() throws Exception {
@@ -235,11 +228,11 @@ public class UserControllerTest {
 	// 회원 삭제 Test
 	@Test
 	public void testUserDelete() throws Exception {
-		UserVo vo = new UserVo();
-		vo.setNo(2);
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/user/delete").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(1)));
+//		UserVo vo = new UserVo();
+//		vo.setNo(1);
+//		ResultActions resultActions = mockMvc.perform(
+//				post("/api/user/delete").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+//
+//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(1)));
 	}
 }

@@ -6,9 +6,20 @@ public class BasketVo {
 	private long item_no;
 	private long member_no;
 	private long nonmember_no;
+	private long option_no;
 	private long item_count; // 물품 수량
 	private long accmulate; // 적립 예정 금액
 	private long total_item_price; // 물품별 총 가격
+
+	NonUserVo nonUserVo;
+
+	public NonUserVo getNonUserVo() {
+		return nonUserVo;
+	}
+
+	public void setNonUserVo(NonUserVo nonUserVo) {
+		this.nonUserVo = nonUserVo;
+	}
 
 	public long getNo() {
 		return no;
@@ -24,6 +35,10 @@ public class BasketVo {
 
 	public long getNonmember_no() {
 		return nonmember_no;
+	}
+
+	public long getOption_no() {
+		return option_no;
 	}
 
 	public long getItem_count() {
@@ -54,6 +69,10 @@ public class BasketVo {
 		this.nonmember_no = nonmember_no;
 	}
 
+	public void setOption_no(long option_no) {
+		this.option_no = option_no;
+	}
+
 	public void setItem_count(long item_count) {
 		this.item_count = item_count;
 	}
@@ -69,8 +88,8 @@ public class BasketVo {
 	@Override
 	public String toString() {
 		return "BasketVo [no=" + no + ", item_no=" + item_no + ", member_no=" + member_no + ", nonmember_no="
-				+ nonmember_no + ", item_count=" + item_count + ", accmulate=" + accmulate + ", total_item_price="
-				+ total_item_price + "]";
+				+ nonmember_no + ", option_no=" + option_no + ", item_count=" + item_count + ", accmulate=" + accmulate
+				+ ", total_item_price=" + total_item_price + ", nonUserVo=" + nonUserVo + "]";
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.cafe24.mall.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +28,8 @@ public class BasketService {
 	}
 
 	// 장바구니 리스트
-	public void getBasketList() {
+	public List<ItemVo> getBasketList(BasketVo basketVo) {
+		return basketDao.getBasketList(basketVo);
 	}
 
 	// 장바구니 물품 삭제
@@ -55,4 +58,5 @@ public class BasketService {
 		macAddr.setMac_addr(nonMemberAddr);
 		return userDao.getNonMemberNo(macAddr);
 	}
+
 }

@@ -15,22 +15,20 @@ public class AdminService {
 	@Autowired
 	private AdminDao adminDao;
 
+	// 물품추가 
 	public ItemVo addItem(ItemVo itemVo) {
 
 		return adminDao.addItem(itemVo);
 	}
 
+	// 사용자 List 출력
 	public List<UserVo> memberList() {
 		return adminDao.getUserList();
 	}
 
 	public void orderList() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void itemList() {
-		// TODO Auto-generated method stub
-
 	}
 }

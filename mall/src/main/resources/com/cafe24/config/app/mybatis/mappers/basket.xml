@@ -22,7 +22,7 @@
 			</otherwise>
 		</choose>
 	<![CDATA[
-	 #{item_no},#{item_count}, (select (price*0.1) from item_detail where item_no=#{item_no}), 
+	 #{item_no},#{option_no},#{item_count}, (select (price*0.1) from item_detail where item_no=#{item_no}), 
 		(select (price*#{item_count}) from item_detail where item_no=#{item_no}))
 		]]>
 		<selectKey keyProperty="basket_no" resultType="long"
@@ -55,4 +55,10 @@
 		and item_no=#{item_no} 
 		]]>
 	</delete>
+	<!-- 장바구니 리스트 -->
+	<select id="getBasketList" parameterType="basketvo">
+	<!-- <![CDATA[
+		SELECT FROM 
+	]]> -->
+	</select>
 </mapper>
