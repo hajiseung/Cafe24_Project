@@ -10,6 +10,7 @@ import com.cafe24.mall.repository.BasketDao;
 import com.cafe24.mall.repository.UserDao;
 import com.cafe24.mall.vo.BasketVo;
 import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.ListVo;
 import com.cafe24.mall.vo.NonUserVo;
 
 @Service
@@ -28,7 +29,7 @@ public class BasketService {
 	}
 
 	// 장바구니 리스트
-	public List<ItemVo> getBasketList(BasketVo basketVo) {
+	public List<ListVo> getBasketList(BasketVo basketVo) {
 		return basketDao.getBasketList(basketVo);
 	}
 

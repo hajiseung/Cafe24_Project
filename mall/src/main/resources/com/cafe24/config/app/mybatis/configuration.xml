@@ -7,6 +7,7 @@
 		<typeAlias type="com.cafe24.mall.vo.ItemVo" alias="itemvo" />
 		<typeAlias type="com.cafe24.mall.vo.NonUserVo" alias="nonuservo" />
 		<typeAlias type="com.cafe24.mall.vo.BasketVo" alias="basketvo" />
+		<typeAlias type="com.cafe24.mall.vo.ListVo" alias="listvo" />
 	</typeAliases>
 	
 	<mappers>

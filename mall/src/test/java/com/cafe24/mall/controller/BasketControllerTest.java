@@ -98,7 +98,7 @@ public class BasketControllerTest {
 		vo.setMember_no(1);
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/basket/list").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				get("/api/basket/list").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
 	}

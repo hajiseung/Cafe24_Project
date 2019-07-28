@@ -1,5 +1,6 @@
 package com.cafe24.mall.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.BasketService;
 import com.cafe24.mall.vo.BasketVo;
 import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.ListVo;
 import com.cafe24.mall.vo.NonUserVo;
 
 @RestController
@@ -58,7 +60,8 @@ public class BasketController {
 	// 장바구니 리스트 호출
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void getBasketList(@RequestBody BasketVo basketVo) {
-//		basketService.getBasketList(basketVo);
+		List<ListVo> list = basketService.getBasketList(basketVo);
+		System.out.println(list);
 	}
 
 	// 장바구니-물품 삭제

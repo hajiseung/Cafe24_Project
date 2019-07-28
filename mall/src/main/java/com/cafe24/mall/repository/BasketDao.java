@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cafe24.mall.vo.BasketVo;
-import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.ListVo;
 
 @Repository
 public class BasketDao {
@@ -27,7 +27,7 @@ public class BasketDao {
 	}
 
 	// 장바구니 물품 리스트
-	public List<ItemVo> getBasketList(BasketVo basketVo) {
+	public List<ListVo> getBasketList(BasketVo basketVo) {
 		return sqlSession.selectList("basket.getBasketList", basketVo);
 	}
 

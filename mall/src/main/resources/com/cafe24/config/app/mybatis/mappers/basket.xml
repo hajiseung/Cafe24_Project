@@ -56,9 +56,32 @@
 		]]>
 	</delete>
 	<!-- 장바구니 리스트 -->
-	<select id="getBasketList" parameterType="basketvo">
-	<!-- <![CDATA[
-		SELECT FROM 
-	]]> -->
+	<select id="getBasketList" parameterType="basketvo" resultType="listvo">
+	<![CDATA[
+		SELECT a.item_no, e.photo, b.title, a.item_count, (a.item_count * c.price * 0.01) accmulate,(a.item_count * c.price) total_item_price
+		FROM 
+		basket a, item b, item_detail c, item_option d, item_photo e 
+		WHERE 
+	]]>
+	<choose>
+	<when test="member_no!=0">
+	<![CDATA[
+		a.member_no=#{member_no}
+	]]>
+	</when>
+	<otherwise>
+	<![CDATA[
+		a.nonmember_no=#{nonmember_no} 
+	]]>
+	</otherwise>
+	</choose>		
+	<![CDATA[
+		and a.item_no=b.no 
+		and b.no=c.item_no 
+		and c.item_no=d.item_no 
+		and d.item_no=e.item_no 
+		and a.option_no = d.no 
+		and e.is_main=1
+	]]>
 	</select>
 </mapper>

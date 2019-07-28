@@ -40,8 +40,8 @@ public class AdminDao {
 		// Item_photo
 		for (int i = 0; i < itemVo.getPhoto().size(); i++) {
 			map.put("no", itemVo.getNo());
-			map.put("main_photo", itemVo.getPhoto().get(i));
-			map.put("is_sub_photo", itemVo.getIs_main().get(i));
+			map.put("photo", itemVo.getPhoto().get(i));
+			map.put("is_main", itemVo.getIs_main().get(i));
 			sqlSession.insert("admin.addItemPhoto", map);
 			map.clear();
 		}
